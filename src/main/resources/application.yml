@@ -14,6 +14,8 @@ spring:
         format_sql: true
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        # 카멜케이스 -> 스네이크 케이스로 바꿔주는 전략 ENTITY가 선언한게 스네이크 케이스로 DB생성 됨
+        # EX ) counselId => counsel_id
     database-platform: org.hibernate.dialect.H2Dialect
   h2:
     console:
