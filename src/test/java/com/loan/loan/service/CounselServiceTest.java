@@ -5,7 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loan.loan.domain.Counsel;
 import com.loan.loan.dto.CounselDto;
+import com.loan.loan.exception.BaseException;
+import com.loan.loan.exception.ResultType;
 import com.loan.loan.repository.CounselRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -53,6 +56,14 @@ public class CounselServiceTest {
         CounselDto.Response actual = counselService.create(request);
 
         assertThat(actual.getName()).isSameAs(entity.getName());
+    }
+
+    @Test
+    void Should_ThrowException_When_RequestNotExistCounselId(){
+        Long findId = 2L;
+        when(counselRepository.findById(findId)).thenThrow(new BaseException((ResultType.SYSTEM_ERROR)));
+
+        Assertions.assertThrows(BaseException.class, () -> counselService.get(findId));
     }
 
 }
