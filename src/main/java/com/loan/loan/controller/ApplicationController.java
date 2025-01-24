@@ -39,4 +39,10 @@ public class ApplicationController extends AbstractController{
         applicationService.delete(applicationId);
         return ok();
     }
+
+    @PostMapping("/{applicationId}/terms")
+    public ResponseDTO<Boolean> acceptTerms(@PathVariable Long applicationId,
+                                            @RequestBody ApplicationDto.AcceptTerms request){
+        return ok(applicationService.acceptTemrs(applicationId, request));
+    }
 }

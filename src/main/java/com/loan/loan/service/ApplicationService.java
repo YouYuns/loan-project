@@ -12,4 +12,6 @@ public interface ApplicationService {
     ApplicationDto.Response update(Long applicationId, ApplicationDto.Request request);
 
     void delete(Long applicationId);
+
+    Boolean acceptTemrs(Long applicationId, ApplicationDto.AcceptTerms request);
 }
