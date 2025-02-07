@@ -1,6 +1,6 @@
 package com.loan.loan.exception;
 
-import com.loan.loan.dto.ResponseDTO;
+import com.loan.loan.dto.ResponseDto;
 import com.loan.loan.dto.ResultObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class APIExceptionHandler extends RuntimeException {
 
     @ExceptionHandler(BaseException.class)
-    protected ResponseDTO<ResultObject> handleBaseException(BaseException e,
+    protected ResponseDto<ResultObject> handleBaseException(BaseException e,
                                                             HttpServletRequest request, HttpServletResponse response) {
         log.error(e.getMessage(), e);
-        return new ResponseDTO<>(e);
+        return new ResponseDto<>(e);
     }
 }

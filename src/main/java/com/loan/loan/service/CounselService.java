@@ -2,7 +2,6 @@ package com.loan.loan.service;
 
 
 import com.loan.loan.dto.CounselDto;
-import com.loan.loan.dto.ResponseDTO;
 
 public interface CounselService {
 

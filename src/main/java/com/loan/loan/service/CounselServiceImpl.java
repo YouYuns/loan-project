@@ -2,7 +2,6 @@ package com.loan.loan.service;
 
 import com.loan.loan.domain.Counsel;
 import com.loan.loan.dto.CounselDto;
-import com.loan.loan.dto.ResponseDTO;
 import com.loan.loan.exception.BaseException;
 import com.loan.loan.exception.ResultType;
 import com.loan.loan.repository.CounselRepository;
