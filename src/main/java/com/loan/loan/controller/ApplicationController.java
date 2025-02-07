@@ -58,30 +58,36 @@ public class ApplicationController extends AbstractController{
     }
 
 
-    @PostMapping("/files")
-    public ResponseDto<Void> upload(MultipartFile file){
-        fileStorageService.save(file);
+    @PostMapping("/{applicationId}/files")
+    public ResponseDto<Void> upload(@PathVariable Long applicationId, MultipartFile file) throws IllegalStateException{
+        fileStorageService.save(applicationId, file);
         return ok();
     }
 
-    @GetMapping("/files")
-    public ResponseEntity<Resource> download(@RequestParam(value = "fileName") String fileName){
-        Resource file = fileStorageService.load(fileName);
+    @GetMapping("/{applicationId}/files")
+    public ResponseEntity<Resource> download(@PathVariable Long applicationId, @RequestParam(value = "fileName") String fileName){
+        Resource file = fileStorageService.load(applicationId, fileName);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = \"" + file.getFilename() + "\"").body(file);
     }
 
-    @GetMapping("/files/info")
-    public ResponseDto<List<FileDto>> getFileInfos() {
+    @GetMapping("/{applicationId}/files/info")
+    public ResponseDto<List<FileDto>> getFileInfos(@PathVariable Long applicationId) {
 
-        fileStorageService.loadAll().map(path -> {
+        List<FileDto> fileInfos = fileStorageService.loadAll(applicationId).map(path -> {
             String fileName = path.getFileName().toString();
             return FileDto.builder()
                     .name(fileName)
                     // MvcUriComponentsBuilder 사용해서 실제로 다운로드할 파일을제공하는 url을 준비
-                    .url(MvcUriComponentsBuilder.fromMethodName(ApplicationController.class, "download", fileName).build().toString())
+                    .url(MvcUriComponentsBuilder.fromMethodName(ApplicationController.class, "download", applicationId).build().toString())
                     .build();
         }).toList();
+        return ok(fileInfos);
+    }
+
+    @DeleteMapping("/{applicationId}/files")
+    public ResponseDto<Void> deleteAll(@PathVariable Long applicationId) {
+        fileStorageService.deleteAll(applicationId);
         return ok();
     }
 
